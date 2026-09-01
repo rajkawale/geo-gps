@@ -119,3 +119,46 @@ export const strategyColumns = [
   { field: "competitors", desc: "Competitor set, `;` separated", example: "Wegovy;Saxenda;Qsymia" },
   { field: "risk_areas", desc: "Priority risk areas, `;` separated", example: "Safety misinformation risk" },
 ];
+
+// Prompt Strategy Review (Screen 13) — recommended direction.
+export const promptStrategy = {
+  runtime: [
+    ["Brand", "Contrave"], ["Indication", "Obesity"], ["Market", "India"],
+    ["Audience", "Patient"], ["Journey Stage", "Treatment Initiation"],
+    ["Lifecycle", "Post Patent Expiry"], ["Orientation", "Unbranded"],
+  ],
+  recommended: "Prioritize Safety and Clinical Evidence, reflecting Brand Strategy's tolerability priority and elevated current evidence demand. Maintain predominantly unbranded education while reserving branded coverage for product-specific and comparison needs.",
+  categoryDirection: [
+    ["Safety & Tolerability", "High"],
+    ["Clinical Evidence", "High"],
+    ["Administration & Use", "Moderate"],
+    ["Comparison & Competition", "Supporting"],
+  ],
+  blueprint: [
+    ["Safety Direction", "High Focus Priority"],
+    ["Brand Strategy", "Tolerability (Primary priority)"],
+    ["Alignment Rating", "Optimal Statistical Prior"],
+  ],
+  implications: "Maintain comparison coverage vs Competitor A, secondary to Safety. Emphasize treatment-initiation given the Post Patent Expiry lifecycle stage and Treatment-Initiation focus.",
+  risks: "Priority Risk — Safety misinformation risk; avoid unsupported superiority claims on weight-loss magnitude.",
+  alignment: "Alignment — Brand Strategy, current evidence and Statistical Prior all support elevated Safety emphasis.",
+};
+
+// Prompt Mix Plan Review (Screen 15) — category weighting.
+export const promptMix = {
+  unbranded: 64, branded: 36,
+  lifecycleNote: "Lifecycle start 60U/40B — secondary context",
+  categories: [
+    ["Safety & Tolerability", "16%", "8", "Statistical Prior + Brand Strategy Primary priority"],
+    ["Clinical Evidence", "14%", "7", "Reinforces High Prompt Strategy direction"],
+    ["Comparison & Competition = Branded", "8%", "4", "Supporting priority; Competitor A context"],
+    ["Disease & Symptoms", "12%", "6", "Baseline Disease Awareness scope coverage"],
+    ["Diagnosis & Screening", "8%", "4", "Statistical Prior baseline; Supporting in Prompt Strategy"],
+    ["Treatment Landscape", "12%", "6", "Growth lifecycle emphasizes treatment-selection context"],
+    ["Product-Specific", "10%", "5", "Brand-anchored coverage independent of orientation"],
+    ["Administration & Use", "10%", "5", "Moderate Prompt Strategy direction"],
+    ["Access & Cost", "6%", "3", "Existing framework baseline; no strategy signal"],
+    ["Patient Support", "4%", "2", "Secondary: HCP-run universe reduces emphasis"],
+  ],
+  total: "Total 100% / 50 prompts — all 10 canonical categories shown (0 conditional categories active for this run)",
+};

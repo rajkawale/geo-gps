@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { NAV, STEPS, SCOPE_FIELDS, PARAM_FIELDS, chatScript, guidanceSections, mockPrompts } from './data.js'
 import BrandStrategyModal from './BrandStrategyModal.jsx'
+import { PromptStrategyReview, PromptMixPlanReview, CompletedScreen } from './ReviewScreens.jsx'
 
 export default function App() {
   const [stepIndex, setStepIndex] = useState(-1)
@@ -30,7 +31,7 @@ export default function App() {
     setBsOpen(false)
   }
 
-  const activeStep = phase === 'generation' ? 2 : phase === 'review' ? 1 : 1
+  const activeStep = ({ scoping: 1, review: 1, strategy: 3, mix: 3, generation: 2, completed: 5 })[phase] || 1
 
   return (
     <div className={`layout ${phase === 'scoping' ? 'with-config' : ''}`}>
@@ -55,12 +56,24 @@ export default function App() {
           <ReviewScreen
             values={values}
             onBack={() => setPhase('scoping')}
-            onContinue={() => setPhase('generation')}
+            onContinue={() => setPhase('strategy')}
           />
         )}
 
+        {phase === 'strategy' && (
+          <PromptStrategyReview onBack={() => setPhase('review')} onContinue={() => setPhase('mix')} />
+        )}
+
+        {phase === 'mix' && (
+          <PromptMixPlanReview onBack={() => setPhase('strategy')} onContinue={() => setPhase('generation')} />
+        )}
+
         {phase === 'generation' && (
-          <GenerationView values={values} onBack={() => setPhase('review')} />
+          <GenerationView values={values} onBack={() => setPhase('mix')} onNext={() => setPhase('completed')} />
+        )}
+
+        {phase === 'completed' && (
+          <CompletedScreen onBack={() => setPhase('generation')} />
         )}
       </div>
 
@@ -264,7 +277,7 @@ function ReviewScreen({ values, onBack, onContinue }) {
 
 /* ---------------- generation (emits mock prompts) ---------------- */
 
-function GenerationView({ values, onBack }) {
+function GenerationView({ values, onBack, onNext }) {
   const [state, setState] = useState('generating')
   useEffect(() => {
     const t = setTimeout(() => setState('done'), 1500)
@@ -299,7 +312,7 @@ function GenerationView({ values, onBack }) {
 
       <div className="view-actions spread">
         <button className="btn btn-s" onClick={onBack}>Back</button>
-        <button className="btn btn-p" disabled={state === 'generating'}>Next →</button>
+        <button className="btn btn-p" disabled={state === 'generating'} onClick={onNext}>Next →</button>
       </div>
     </div>
   )
