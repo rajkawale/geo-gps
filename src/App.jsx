@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { NAV, STEPS, SCOPE_FIELDS, PARAM_FIELDS, chatScript, guidanceSections, mockPrompts } from './data.js'
 import BrandStrategyModal from './BrandStrategyModal.jsx'
-import { PromptStrategyReview, PromptMixPlanReview, CompletedScreen, BattleNarrative } from './ReviewScreens.jsx'
+import { PromptPlanReview, CompletedScreen } from './ReviewScreens.jsx'
 
 export default function App() {
   const [stepIndex, setStepIndex] = useState(-1)
@@ -43,7 +43,7 @@ export default function App() {
     return () => window.removeEventListener('keydown', onKey)
   }, [phase, stepIndex, bsOpen, bsDone])
 
-  const activeStep = ({ scoping: 1, review: 1, battle: 3, strategy: 3, mix: 3, generation: 2, completed: 5 })[phase] || 1
+  const activeStep = ({ scoping: 1, review: 1, plan: 3, generation: 2, completed: 5 })[phase] || 1
 
   return (
     <div className={`layout ${phase === 'scoping' ? 'with-config' : ''}`}>
@@ -68,24 +68,16 @@ export default function App() {
           <ReviewScreen
             values={values}
             onBack={() => setPhase('scoping')}
-            onContinue={() => setPhase('battle')}
+            onContinue={() => setPhase('plan')}
           />
         )}
 
-        {phase === 'battle' && (
-          <BattleNarrative onBack={() => setPhase('review')} onContinue={() => setPhase('strategy')} />
-        )}
-
-        {phase === 'strategy' && (
-          <PromptStrategyReview onBack={() => setPhase('battle')} onContinue={() => setPhase('mix')} />
-        )}
-
-        {phase === 'mix' && (
-          <PromptMixPlanReview onBack={() => setPhase('strategy')} onContinue={() => setPhase('generation')} />
+        {phase === 'plan' && (
+          <PromptPlanReview onBack={() => setPhase('review')} onContinue={() => setPhase('generation')} />
         )}
 
         {phase === 'generation' && (
-          <GenerationView values={values} onBack={() => setPhase('mix')} onNext={() => setPhase('completed')} />
+          <GenerationView values={values} onBack={() => setPhase('plan')} onNext={() => setPhase('completed')} />
         )}
 
         {phase === 'completed' && (

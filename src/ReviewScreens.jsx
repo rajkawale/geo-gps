@@ -161,3 +161,88 @@ export function BattleNarrative({ onBack, onContinue }) {
     </div>
   )
 }
+
+export function PromptPlanReview({ onBack, onContinue }) {
+  const [showEvidence, setShowEvidence] = React.useState(false)
+  return (
+    <div className="view plan">
+      <div className="strategy-head">
+        <div>
+          <h2>Prompt Plan Review</h2>
+          <p className="sub">Strategy direction and category mix, derived from the approved brand strategy and context.</p>
+        </div>
+        <button className="btn btn-s btn-sm">Adjust Plan</button>
+      </div>
+
+      <div className="rv-card">
+        <div className="card-head">
+          <span className="card-title">Strategic Points</span>
+          <span className="badge blue">AI-generated · grounded</span>
+        </div>
+        <div className="battle-cols">
+          {battleNarrative.columns.map(c => (
+            <div key={c.key} className="battle-col">
+              <div className="battle-col-head">{c.key}</div>
+              <div className="battle-col-title">{c.title}</div>
+              <ul className="battle-points">{c.points.map((p, i) => <li key={i}>{p}</li>)}</ul>
+            </div>
+          ))}
+        </div>
+        <div className="evidence-toggle" onClick={() => setShowEvidence(v => !v)}>
+          {showEvidence ? 'Hide details ▾' : 'Show details — brand priority, characteristics, evidence ▸'}
+        </div>
+        {showEvidence && (
+          <div className="battle-cols evidence">
+            {battleNarrative.evidence.map(e => (
+              <div key={e.key} className="battle-col">
+                <div className="battle-col-head">{e.key}</div>
+                <ul className="battle-points">{e.items.map((p, i) => <li key={i}>{p}</li>)}</ul>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <div className="two-col">
+        <div className="rv-card">
+          <div className="card-head"><span className="card-title">Category Direction</span></div>
+          <table className="tbl">
+            <thead><tr><th>Category</th><th>Direction</th></tr></thead>
+            <tbody>
+              {promptStrategy.categoryDirection.map(([c, d]) => (
+                <tr key={c}><td>{c}</td><td className={`dir dir-${d.toLowerCase()}`}>{d}</td></tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div className="rv-card">
+          <div className="card-head"><span className="card-title">Strategy Blueprint</span></div>
+          {promptStrategy.blueprint.map(([k, v]) => (
+            <div key={k} className="rv-row"><span className="k">{k}</span><span className="v">{v}</span></div>
+          ))}
+        </div>
+      </div>
+
+      <div className="rv-card">
+        <div className="card-head">
+          <span className="card-title">Category Mix</span>
+          <span className="orient-pct"><b>{promptMix.unbranded}%</b> Unbranded · <b>{promptMix.branded}%</b> Branded</span>
+        </div>
+        <table className="tbl mix-tbl">
+          <thead><tr><th>Category</th><th>%</th><th>Count</th><th>Why this weight?</th></tr></thead>
+          <tbody>
+            {promptMix.categories.map(([c, pct, count, why]) => (
+              <tr key={c}><td>{c}</td><td>{pct}</td><td>{count}</td><td className="why">{why}</td></tr>
+            ))}
+          </tbody>
+        </table>
+        <div className="mix-total">{promptMix.total}</div>
+      </div>
+
+      <div className="view-actions spread">
+        <button className="btn btn-s" onClick={onBack}>Back</button>
+        <button className="btn btn-p" onClick={onContinue}>Approve &amp; Generate →</button>
+      </div>
+    </div>
+  )
+}
