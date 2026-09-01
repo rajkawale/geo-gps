@@ -189,13 +189,13 @@ function ReviewScreen({ values, onBack, onContinue }) {
     ["MARKETS", values.Markets],
     ["AUDIENCE", values.Audience],
     ["STAGE", values.Stage],
-    ["BRAND STRATEGY", values["Brand Strategy"]],
     ["INTENT", values.Intent],
     ["BRAND LIFECYCLE", values["Brand Lifecycle"]],
     ["UNIVERSE TYPE", values["Prompt Orientation"]],
     ["FOCUS / THEME", values.Themes],
     ["KEYWORDS", values.Keywords],
     ["COUNT", values.Count],
+    ["BRAND STRATEGY", values["Brand Strategy"]],
   ]
   return (
     <div className="view review">
@@ -247,7 +247,9 @@ function ReviewScreen({ values, onBack, onContinue }) {
           <div key={k} className="field-row">
             <span className="field-k">{k}</span>
             <span className={`field-v ${k === 'BRAND STRATEGY' ? 'blue' : ''}`}>{v || 'Not set (optional)'}</span>
-            <button className="btn-edit">Edit</button>
+            {k === 'BRAND STRATEGY'
+              ? <span className="badge green">✓ Validated</span>
+              : <button className="btn-edit">Edit</button>}
           </div>
         ))}
       </div>
