@@ -162,3 +162,54 @@ export const promptMix = {
   ],
   total: "Total 100% / 50 prompts — all 10 canonical categories shown (0 conditional categories active for this run)",
 };
+
+// Battle Narrative (after brand strategy) — where the brand wins, synthesized from sources.
+export const battleNarrative = {
+  summary: "Synthesized from the brand plan + deck + live web research — a consulting-strategy pass, not a human-reviewed sign-off. This is the battle narrative; the columns are the raw inputs it reasoned over.",
+  columns: [
+    {
+      key: "WIN AREA",
+      title: "Win the community setting with oral, non-injectable convenience vs. GLP-1 injectables",
+      points: [
+        "Defend and grow community share by positioning against Wegovy and Saxenda's injection burden",
+        "Drive higher duration of therapy by leveraging once-daily oral dosing and a non-stimulant mechanism",
+        "Counter injectable noise by anchoring on 'no injection' as the core differentiator",
+      ],
+    },
+    {
+      key: "FOCUS AREA",
+      title: "Own the first 90 days to maximize duration of therapy",
+      points: [
+        "Directly combat the highest period of discontinuation (nausea, early drop-off) with titration education",
+        "Shift focus from pre-script decisions to post-script support and adherence",
+        "Build practice-level loyalty by simplifying onboarding and AE management for NPs and PAs",
+      ],
+    },
+    {
+      key: "UNIQUE PROPOSITION",
+      title: "The most established oral option for patients who'd rather avoid a daily injection",
+      points: [
+        "Solidify Contrave as a non-injectable standard by leveraging naltrexone/bupropion's long real-world history",
+        "Appeal to injection-averse patients by emphasizing oral convenience and titration flexibility",
+        "Counter competitor noise by anchoring on tolerability and a non-stimulant profile",
+      ],
+    },
+  ],
+  evidence: [
+    { key: "BRAND PRIORITY", items: [
+      "Entrench Contrave as the leading oral option for obesity",
+      "Defend share by reinforcing tolerability and oral convenience",
+      "Extend adherence through titration and support education",
+    ]},
+    { key: "KEY CHARACTERISTICS", items: [
+      "Naltrexone/bupropion, once-daily oral, non-stimulant",
+      "Key differentiators: oral dosing, no injection, titration flexibility",
+      "Perceived as the 'oral alternative' for injection-averse patients",
+    ]},
+    { key: "CLINICAL TRIALS & EVIDENCE", items: [
+      "COR-I / COR-II — 56-week trials, ~5-6% mean weight loss vs placebo",
+      "COR-BMOD — with intensive behavior modification, ~9% weight loss",
+      "COR-Diabetes — in type 2 diabetes, improved glycemic control",
+    ]},
+  ],
+};

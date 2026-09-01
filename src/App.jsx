@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { NAV, STEPS, SCOPE_FIELDS, PARAM_FIELDS, chatScript, guidanceSections, mockPrompts } from './data.js'
 import BrandStrategyModal from './BrandStrategyModal.jsx'
-import { PromptStrategyReview, PromptMixPlanReview, CompletedScreen } from './ReviewScreens.jsx'
+import { PromptStrategyReview, PromptMixPlanReview, CompletedScreen, BattleNarrative } from './ReviewScreens.jsx'
 
 export default function App() {
   const [stepIndex, setStepIndex] = useState(-1)
@@ -31,7 +31,19 @@ export default function App() {
     setBsOpen(false)
   }
 
-  const activeStep = ({ scoping: 1, review: 1, strategy: 3, mix: 3, generation: 2, completed: 5 })[phase] || 1
+  // Enter advances the primary action during scoping
+  React.useEffect(() => {
+    function onKey(e) {
+      if (e.key !== 'Enter' || phase !== 'scoping' || bsOpen) return
+      if (stepIndex < chatScript.length - 1) advance()
+      else if (!bsDone) setBsOpen(true)
+      else setPhase('review')
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [phase, stepIndex, bsOpen, bsDone])
+
+  const activeStep = ({ scoping: 1, review: 1, battle: 3, strategy: 3, mix: 3, generation: 2, completed: 5 })[phase] || 1
 
   return (
     <div className={`layout ${phase === 'scoping' ? 'with-config' : ''}`}>
@@ -56,12 +68,16 @@ export default function App() {
           <ReviewScreen
             values={values}
             onBack={() => setPhase('scoping')}
-            onContinue={() => setPhase('strategy')}
+            onContinue={() => setPhase('battle')}
           />
         )}
 
+        {phase === 'battle' && (
+          <BattleNarrative onBack={() => setPhase('review')} onContinue={() => setPhase('strategy')} />
+        )}
+
         {phase === 'strategy' && (
-          <PromptStrategyReview onBack={() => setPhase('review')} onContinue={() => setPhase('mix')} />
+          <PromptStrategyReview onBack={() => setPhase('battle')} onContinue={() => setPhase('mix')} />
         )}
 
         {phase === 'mix' && (
@@ -146,9 +162,14 @@ function ConfigPanel({ values }) {
 /* ---------------- scoping chat ---------------- */
 
 function ScopeChat({ stepIndex }) {
+  const ref = React.useRef(null)
+  React.useEffect(() => {
+    if (ref.current) ref.current.scrollTop = ref.current.scrollHeight
+  }, [stepIndex])
   return (
-    <div className="chat">
+    <div className="chat" ref={ref}>
       <div className="welcome">Welcome to GEO GPS!</div>
+      <div className="chat-hint">Answer a few questions to scope the run — press Enter to continue.</div>
       {chatScript.slice(1, stepIndex + 1).map((s, i) => <Step key={i} s={s} />)}
     </div>
   )
