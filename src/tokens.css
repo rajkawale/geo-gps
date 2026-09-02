@@ -1,0 +1,137 @@
+/* ==========================================================================
+   Indegene DS 4.Ai — tokens
+   Copied from "Indegene Design Principle/Indegene DS 4.Ai Design System/tokens.css".
+   Rule from the guidelines: every color is var(--token), every gap is
+   var(--spacing-N). If a value isn't here, it's off-system.
+   ========================================================================== */
+
+@font-face { font-family: "DM Sans"; font-weight: 400; font-style: normal; src: url("/fonts/DMSans-Regular.ttf") format("truetype"); font-display: swap; }
+@font-face { font-family: "DM Sans"; font-weight: 500; font-style: normal; src: url("/fonts/DMSans-Medium.ttf") format("truetype"); font-display: swap; }
+@font-face { font-family: "DM Sans"; font-weight: 600; font-style: normal; src: url("/fonts/DMSans-SemiBold.ttf") format("truetype"); font-display: swap; }
+@font-face { font-family: "DM Sans"; font-weight: 700; font-style: normal; src: url("/fonts/DMSans-Bold.ttf") format("truetype"); font-display: swap; }
+
+:root {
+  /* ---------- BRAND ---------- */
+  --primary: #5D2CC9;
+  --primary-light-background: #F5F0FF;
+  --primary-background-hover: #421F8F;
+  --primary-background-pressed: #271254;
+
+  /* ---------- SEMANTIC ---------- */
+  --success-foreground: #1D5F02;
+  --success-light-background: #EAF3E6;
+  --error-foreground: #BF1724;
+  --error-light-background: #FFE8E8;
+  --warning-foreground: #946119;
+  --warning-light-background: #FFF4E1;
+  --info-foreground: #0E5FB7;
+  --info-light-background: #E1EEFB;
+
+  /* ---------- NEUTRAL SCALE ---------- */
+  --neutral-50:  #FAFAFA;
+  --neutral-100: #F2F2F2;
+  --neutral-200: #E5E5E5;
+  --neutral-300: #D1D5DB;
+  --neutral-400: #B5B3B3;
+  --neutral-500: #9A9A9C;
+  --neutral-600: #6D6E71;
+  --neutral-700: #4A4647;
+  --neutral-800: #332F30;
+  --neutral-900: #231F20;
+
+  --neutral-black: var(--neutral-900);
+  --neutral-disabled-text: var(--neutral-600);
+  --neutral-disabled-graphic: var(--neutral-400);
+  --neutral-disabled-background: var(--neutral-300);
+  --neutral-light-hover: var(--neutral-100);
+
+  /* ---------- BASE ---------- */
+  --base-white: #FFFFFF;
+
+  /* ---------- SURFACES ---------- */
+  --surface-prompt-panel: rgba(255, 255, 255, 0.9);
+  --surface-input-ghost:  rgba(249, 248, 249, 0.6);
+  --surface-user-bubble:  #EDE9FE;
+  --surface-app-header:   #F8F8FC;
+  --surface-card-tinted:  #F4F1FB;
+  --surface-app-shell-nav:#FBFBFB;
+  --surface-page-content: #F7F8FA;
+
+  /* ---------- TYPOGRAPHY ---------- */
+  --font-family: "DM Sans";
+
+  --display-large:  600 57px/64px var(--font-family);
+  --display-medium: 600 45px/52px var(--font-family);
+  --display-small:  600 36px/44px var(--font-family);
+  --headline-large:  600 32px/40px var(--font-family);
+  --headline-medium: 600 28px/36px var(--font-family);
+  --headline-small:  600 24px/32px var(--font-family);
+  --title-large:  500 22px/28px var(--font-family);
+  --title-medium: 500 16px/24px var(--font-family);
+  --title-small:  500 14px/20px var(--font-family);
+  --body-large:  400 16px/24px var(--font-family);
+  --body-medium: 400 14px/20px var(--font-family);
+  --body-small:  400 12px/16px var(--font-family);
+  --label-large:  600 14px/20px var(--font-family);
+  --label-medium: 600 12px/16px var(--font-family);
+  --label-small:  500 11px/16px var(--font-family);
+
+  /* ---------- SPACING ---------- */
+  --spacing-0: 0;
+  --spacing-2: 2px;
+  --spacing-4: 4px;
+  --spacing-6: 6px;
+  --spacing-8: 8px;
+  --spacing-10: 10px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
+  --spacing-24: 24px;
+  --spacing-28: 28px;
+  --spacing-32: 32px;
+  --spacing-36: 36px;
+  --spacing-40: 40px;
+  --spacing-48: 48px;
+  --spacing-52: 52px;
+  --spacing-56: 56px;
+  --spacing-96: 96px;
+
+  /* ---------- RADIUS ---------- */
+  --radius-none: 0;
+  --radius-2xs: 2px;
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-full: 999px;
+
+  /* ---------- ELEVATION ---------- */
+  --elevation-0: none;
+  --elevation-02: 0 1px 2px rgba(0,0,0,0.14), 0 0 2px rgba(0,0,0,0.12);
+  --elevation-04: 0 2px 4px rgba(0,0,0,0.14), 0 0 2px rgba(0,0,0,0.12);
+  --elevation-tooltip: 0 4px 6px rgba(0,0,0,0.25);
+  --elevation-toast: 0 8px 16px rgba(0,0,0,0.25), 0 10px 15px rgba(0,0,0,0.10), 0 4px 6px rgba(0,0,0,0.10);
+  --elevation-modal: 0 32px 64px rgba(0,0,0,0.24), 0 0 8px rgba(0,0,0,0.20);
+
+  /* ---------- BORDERS ---------- */
+  --border-1: 1px;
+  --border-2: 2px;
+  --border-4: 4px;
+
+  /* Focus ring — the documented double ring, used everywhere. */
+  --focus-ring: 0 0 0 2px var(--base-white), 0 0 0 4px var(--primary);
+}
+
+/* Type utility classes (tracking is not baked into the font shorthand). */
+.t-headline-l { font: var(--headline-large); }
+.t-headline-s { font: var(--headline-small); }
+.t-title-l    { font: var(--title-large); }
+.t-title-m    { font: var(--title-medium);  letter-spacing: 0.15px; }
+.t-title-s    { font: var(--title-small);   letter-spacing: 0.10px; }
+.t-body-l     { font: var(--body-large);    letter-spacing: 0.50px; }
+.t-body-m     { font: var(--body-medium);   letter-spacing: 0.25px; }
+.t-body-s     { font: var(--body-small);    letter-spacing: 0.40px; }
+.t-label-l    { font: var(--label-large);   letter-spacing: 0.10px; }
+.t-label-m    { font: var(--label-medium);  letter-spacing: 0.50px; }
+.t-label-s    { font: var(--label-small);   letter-spacing: 0.50px; }
