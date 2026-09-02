@@ -405,6 +405,25 @@ function ScopeChat({
     onAnswer(v || 'Skipped')
   }
 
+  /** Typing works for option steps too: match against the visible options
+      (case-insensitive), or — on an open-vocabulary step — add whatever was
+      typed as a new option. Clicking a chip stays the fast path; this is the
+      keyboard one. */
+  function submitTyped() {
+    const v = draft.trim()
+    if (!v) return
+    if (step.type !== 'single' && step.type !== 'multi') { submitFree(v); return }
+
+    const match = optionsFor(step).find(o => o.toLowerCase() === v.toLowerCase())
+    const value = match || (step.allowOther ? v : null)
+    if (!value) return   // closed vocabulary, no match — nothing to submit
+
+    if (!match && step.allowOther) onAddCustom(step.key, value)
+    if (step.type === 'single') { onAnswer(value); return }
+    setMulti(m => m.includes(value) ? m : [...m, value])
+    setDraft('')
+  }
+
   /** Commit an "Other" value: it joins the option list, then gets selected. */
   function submitOther() {
     const v = otherText.trim()
@@ -537,29 +556,30 @@ function ScopeChat({
 
       <div className="prompt-panel">
         <div className="pp-chips">
-          <Tag tone="primary"><Icon name="file" size={12} /> {run.scenario.brand}</Tag>
+          <Tag tone="primary">{run.scenario.brand}</Tag>
           <Tag tone="neutral">{run.scenario.indication}</Tag>
           {bs && bs.kind !== 'skip' && <Tag tone="success"><Icon name="check" size={12} /> strategy locked</Tag>}
         </div>
         <div className="pp-input">
           <input
             value={draft}
-            disabled={stepIndex >= run.script.length || step?.type === 'single' || step?.type === 'multi'}
+            disabled={stepIndex >= run.script.length}
             placeholder={
               stepIndex >= run.script.length ? 'Scope complete — review or adjust above'
-                : step?.type === 'single' || step?.type === 'multi' ? 'Pick an option above'
+                : step?.type === 'single' || step?.type === 'multi' ? 'Type or pick an option above, then Enter'
                   : step?.type === 'number' ? 'Type a number, then Enter'
                     : 'Type your answer, then Enter'
             }
             onChange={e => setDraft(e.target.value)}
-            onKeyDown={e => { if (e.key === 'Enter') submitFree() }}
+            onKeyDown={e => { if (e.key === 'Enter') submitTyped() }}
           />
           <div className="pp-tools">
             <Btn size="sm" variant="filled" onClick={() => {
+              if (stepIndex >= run.script.length) { onReview(); return }
+              if (draft.trim()) { submitTyped(); return }
               if (step?.type === 'multi') onAnswer(multi.length ? multi : ['Skipped'])
               else if (step?.type === 'single') onAnswer(answers[step.key] ?? step.a)
-              else if (stepIndex < run.script.length) submitFree()
-              else onReview()
+              else submitFree()
             }}>
               {stepIndex >= run.script.length ? 'Review' : 'Send'}
             </Btn>
