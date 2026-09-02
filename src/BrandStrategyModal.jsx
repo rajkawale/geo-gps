@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react'
 import { comparableFields, strategyColumns } from './data.js'
-import { AiMark, Icon, Btn, Tag, Banner, Kbd } from './ui.jsx'
+import { Icon, Btn, Tag, Banner, Kbd } from './ui.jsx'
 
 const UPLOAD_STEPS = [
   "Extracting structure from the uploaded strategy",
@@ -170,7 +170,6 @@ export default function BrandStrategyModal({
     <div className="overlay" onMouseDown={e => { if (e.target === e.currentTarget) onClose() }}>
       <div className="modal" role="dialog" aria-modal="true" aria-label="Brand strategy">
         <header className="modal-head">
-          <AiMark size={24} />
           <div className="modal-head-text">
             <h2 className="modal-title">Brand strategy</h2>
             <p className="modal-sub">

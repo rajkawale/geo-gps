@@ -55,26 +55,6 @@ button:disabled { cursor: not-allowed; }
   color: var(--primary);
 }
 .brand-name { font: var(--title-medium); letter-spacing: 0.15px; color: var(--neutral-900); }
-.ai-mark { display: inline-block; color: var(--primary); flex-shrink: 0; }
-.ai-mark svg { display: block; width: 100%; height: 100%; }
-
-/* Halo pulse — only while the agent is producing. Not an idle animation. */
-.ai-mark-pulse {
-  position: relative; flex-shrink: 0;
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 32px; height: 32px; color: var(--primary);
-}
-.ai-mark-pulse svg { position: relative; z-index: 1; width: 24px; height: 24px; }
-.ai-mark-pulse::before {
-  content: ""; position: absolute; inset: var(--spacing-4);
-  background: var(--primary); border-radius: var(--radius-full);
-  animation: ai-halo 2000ms ease-out infinite;
-}
-@keyframes ai-halo {
-  from { transform: scale(0.6); opacity: 0.4; }
-  to   { transform: scale(1.6); opacity: 0; }
-}
-@media (prefers-reduced-motion: reduce) { .ai-mark-pulse::before { display: none; } }
 
 .new-btn {
   height: 40px; display: flex; align-items: center; gap: var(--spacing-12);
@@ -294,7 +274,6 @@ button:disabled { cursor: not-allowed; }
   display: inline-flex; align-items: center; justify-content: center;
   font: var(--label-medium); letter-spacing: 0.5px;
 }
-.msg-avatar.ai { background: var(--primary-light-background); color: var(--primary); }
 .msg-avatar.user { background: var(--neutral-200); color: var(--neutral-800); }
 .msg-body { display: flex; flex-direction: column; min-width: 0; }
 .msg.user { flex-direction: row-reverse; }
@@ -372,13 +351,13 @@ button:disabled { cursor: not-allowed; }
 /* Prompt panel: radius-lg, 2px primary border — locked composition. */
 .prompt-panel {
   flex: none;
-  background: var(--surface-prompt-panel);
-  border: var(--border-2) solid var(--primary);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--elevation-02);
+  background: var(--base-white);
+  border: var(--border-1) solid var(--neutral-200);
+  border-radius: var(--radius-md);
   padding: var(--spacing-12) var(--spacing-16);
   display: flex; flex-direction: column; gap: var(--spacing-8);
 }
+.prompt-panel:focus-within { border-color: var(--neutral-400); }
 .pp-chips { display: flex; gap: var(--spacing-6); flex-wrap: wrap; }
 .pp-input { display: flex; align-items: center; gap: var(--spacing-8); }
 .pp-input input {
@@ -849,7 +828,9 @@ button:disabled { cursor: not-allowed; }
   border: var(--border-2) solid var(--neutral-200); border-top-color: var(--primary);
   animation: spin 700ms linear infinite;
 }
+.spinner-lg { width: 32px; height: 32px; border-width: var(--border-4); }
 @keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .spinner { animation: none; } }
 .proc-note { font: var(--body-small); letter-spacing: 0.4px; color: var(--neutral-600); margin: 0; }
 
 .bulk-row { display: flex; align-items: center; gap: var(--spacing-8); font: var(--body-small); letter-spacing: 0.4px; color: var(--neutral-600); }

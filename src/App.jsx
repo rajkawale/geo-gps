@@ -7,7 +7,7 @@ import {
 
 import BrandStrategyModal from './BrandStrategyModal.jsx'
 import { PlanReview, GenerationView, CompletedScreen } from './ReviewScreens.jsx'
-import { AiMark, Icon, Btn, IconBtn, Tag, Card, Banner, Kbd } from './ui.jsx'
+import { Icon, Btn, IconBtn, Tag, Card, Banner, Kbd } from './ui.jsx'
 
 const SCREENS = ['chat', 'review', 'plan', 'generation', 'completed']
 
@@ -294,7 +294,6 @@ function Rail({ open, onToggle }) {
   return (
     <aside className={`rail ${open ? 'expanded' : 'collapsed'}`}>
       <div className="brand-row">
-        <AiMark size={24} />
         <span className="brand-name">GEO GPS</span>
       </div>
 
@@ -322,14 +321,13 @@ function Rail({ open, onToggle }) {
   )
 }
 
-// Left zone is locked to "AI mark + title/subtitle" — no back/forward buttons
-// here. Screen-level back lives on each view's footer (like the real product's
-// "Back to chat"); the stepper covers jumping forward again.
+// No back/forward buttons here — screen-level back lives on each view's
+// footer (like the real product's "Back to chat"); the stepper covers
+// jumping forward again.
 function AppHeader({ scenario, count, screen, onNewScenario, generating }) {
   return (
     <header className="app-header">
       <div className="zone-l">
-        {generating ? <AiMark size={32} pulsing /> : <AiMark size={24} />}
         <div className="crumbs">
           <span className="title">{scenario.brand} · {scenario.indication}</span>
           <span className="sub">{scenario.disease}</span>
@@ -438,7 +436,6 @@ function ScopeChat({
     <div className="chat-wrap">
       <div className="chat" ref={scrollRef}>
         <div className="chat-intro">
-          <AiMark size={32} />
           <h1 className="chat-hello">Let's scope this universe.</h1>
           <p className="chat-lede">
             {run.script.length} questions, then a brand strategy check. Answer with a click,
@@ -453,7 +450,6 @@ function ScopeChat({
         {stepIndex < run.script.length && (
           <div className="turn">
             <div className="msg ai">
-              <span className="msg-avatar ai"><AiMark size={18} /></span>
               <div className="msg-body">
                 <div className="bubble ai">{step.q}</div>
                 <div className="who">GEO agent · question {stepIndex + 1} of {run.script.length}</div>
@@ -525,7 +521,6 @@ function ScopeChat({
         {scopeDone && (
           <div className="turn">
             <div className="msg ai">
-              <span className="msg-avatar ai"><AiMark size={18} /></span>
               <div className="msg-body">
                 <div className="bubble ai">
                   Scope captured. {bs
@@ -599,7 +594,6 @@ function AnsweredTurn({ s, value, onEdit }) {
   return (
     <div className="turn is-answered">
       <div className="msg ai">
-        <span className="msg-avatar ai"><AiMark size={18} /></span>
         <div className="msg-body">
           <div className="bubble ai">{s.q}</div>
         </div>

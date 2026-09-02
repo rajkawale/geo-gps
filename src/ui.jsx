@@ -1,17 +1,5 @@
 import React from 'react'
 
-/* The AI mark. Filled hexagon, exact path from the design system — the only
-   filled icon on chrome. Never a sparkle. */
-export function AiMark({ size = 24, pulsing = false, className = '' }) {
-  const svg = (
-    <svg viewBox="0 0 24 24" style={{ width: '100%', height: '100%' }}>
-      <path fill="currentColor" d="M12 1 L22 6.5 L22 17.5 L12 23 L2 17.5 L2 6.5 Z" />
-    </svg>
-  )
-  if (pulsing) return <span className={`ai-mark-pulse ${className}`}>{svg}</span>
-  return <span className={`ai-mark ${className}`} style={{ width: size, height: size }}>{svg}</span>
-}
-
 /* Stroke icons: 1.7px, round caps/joins, 24 viewBox — per the icon spec. */
 const PATHS = {
   home: <><path d="M3 10.5 12 3l9 7.5" /><path d="M5 9.5V21h14V9.5" /></>,

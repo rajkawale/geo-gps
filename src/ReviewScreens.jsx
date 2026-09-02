@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { CATEGORIES, buildMix, buildPrompts } from './data.js'
-import { AiMark, Icon, Btn, IconBtn, Tag, Card, Banner, Kbd } from './ui.jsx'
+import { Icon, Btn, IconBtn, Tag, Card, Banner, Kbd } from './ui.jsx'
 
 /* ============================================================ plan review */
 
@@ -61,7 +61,7 @@ export function PlanReview({ run, setRun, onRegenerate, onBack, onContinue }) {
       </div>
 
       <Card title="Strategic points"
-        right={<Tag tone="primary"><AiMark size={12} /> AI-generated · grounded</Tag>}>
+        right={<Tag tone="primary">AI-generated · grounded</Tag>}>
         <p className="card-lede">
           Synthesized from the brand plan, the deck and live web research — a consulting-strategy
           pass, not a human-reviewed sign-off.
@@ -246,7 +246,7 @@ export function GenerationView({ run, setRun, onRegenerate, onBack, onContinue, 
 
       {state === 'generating' ? (
         <div className="generating">
-          <AiMark size={32} pulsing />
+          <span className="spinner spinner-lg" />
           <p className="gen-line">Generating {run.count} prompts across {run.mix.rows.length} categories…</p>
         </div>
       ) : (
