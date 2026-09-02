@@ -20,7 +20,11 @@ body {
 
 button { font: inherit; cursor: pointer; }
 button:disabled { cursor: not-allowed; }
+/* The double-ring is for buttons, chips and other controls — bare text
+   inputs sit inside a container that already shows focus via its own border,
+   so a second purple ring on top of that just reads as a stray highlight. */
 :focus-visible { outline: none; box-shadow: var(--focus-ring); border-radius: var(--radius-xs); }
+input:focus-visible, select:focus-visible, textarea:focus-visible { box-shadow: none; }
 .icon { flex-shrink: 0; }
 
 /* ------------------------------------------------------------------ shell */
@@ -322,7 +326,7 @@ button:disabled { cursor: not-allowed; }
   display: inline-flex; align-items: center; gap: var(--spacing-4);
   height: 32px; padding: 0 var(--spacing-4) 0 var(--spacing-12);
   background: var(--base-white);
-  border: var(--border-1) solid var(--primary); border-radius: var(--radius-full);
+  border: var(--border-1) solid var(--neutral-400); border-radius: var(--radius-full);
 }
 .other-field input {
   width: 200px; border: 0; outline: 0; background: transparent;
@@ -502,7 +506,7 @@ button:disabled { cursor: not-allowed; }
 .field-actions { display: flex; gap: var(--spacing-2); }
 .field-edit {
   flex: 1; height: 32px; padding: 0 var(--spacing-8);
-  border: var(--border-1) solid var(--primary); border-radius: var(--radius-sm);
+  border: var(--border-1) solid var(--neutral-400); border-radius: var(--radius-sm);
   font: var(--body-medium); letter-spacing: 0.25px; color: var(--neutral-900);
   background: var(--base-white);
 }
@@ -745,7 +749,7 @@ button:disabled { cursor: not-allowed; }
   border: var(--border-1) solid var(--neutral-600); border-radius: var(--radius-sm);
   color: var(--neutral-600);
 }
-.search-field:focus-within { border-color: var(--primary); }
+.search-field:focus-within { border-color: var(--neutral-400); }
 .search-field input {
   flex: 1; border: 0; outline: 0; background: transparent;
   font: var(--body-medium); letter-spacing: 0.25px; color: var(--neutral-900);
