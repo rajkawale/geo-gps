@@ -217,8 +217,6 @@ export default function App() {
           scenario={run.scenario}
           count={run.count}
           screen={screen}
-          canBack={canBack} canFwd={canFwd}
-          onBack={back} onFwd={forward}
           onNewScenario={newScenario}
           generating={generating}
         />
@@ -232,7 +230,6 @@ export default function App() {
               answers={answers} bs={bs}
               optionsFor={optionsFor} onAddCustom={addCustom}
               onAnswer={answer}
-              onStepBack={() => setStepIndex(i => Math.max(0, i - 1))}
               onStepTo={setStepIndex}
               onOpenStrategy={() => setBsOpen(true)}
               onReview={() => go('review')}
@@ -325,22 +322,17 @@ function Rail({ open, onToggle }) {
   )
 }
 
-function AppHeader({ scenario, count, screen, canBack, canFwd, onBack, onFwd, onNewScenario, generating }) {
-  const crumb = {
-    chat: 'Scoping', review: 'Review configuration', plan: 'Prompt plan',
-    generation: 'Generation', completed: 'Completed',
-  }[screen]
+// Left zone is locked to "AI mark + title/subtitle" — no back/forward buttons
+// here. Screen-level back lives on each view's footer (like the real product's
+// "Back to chat"); the stepper covers jumping forward again.
+function AppHeader({ scenario, count, screen, onNewScenario, generating }) {
   return (
     <header className="app-header">
       <div className="zone-l">
-        <div className="hist-btns">
-          <IconBtn name="back" label="Back (⌘←)" onClick={onBack} disabled={!canBack} />
-          <IconBtn name="fwd" label="Forward (⌘→)" onClick={onFwd} disabled={!canFwd} />
-        </div>
         {generating ? <AiMark size={32} pulsing /> : <AiMark size={24} />}
         <div className="crumbs">
           <span className="title">{scenario.brand} · {scenario.indication}</span>
-          <span className="sub">{scenario.disease} · New prompt universe / {crumb}</span>
+          <span className="sub">{scenario.disease}</span>
         </div>
       </div>
       {/* Center zone: an AI status pill while producing, otherwise empty —
@@ -384,7 +376,7 @@ function Stepper({ active, furthest, onJump }) {
 
 function ScopeChat({
   run, step, stepIndex, answeredTo, answers, bs, optionsFor, onAddCustom,
-  onAnswer, onStepBack, onStepTo, onOpenStrategy, onReview, scopeDone,
+  onAnswer, onStepTo, onOpenStrategy, onReview, scopeDone,
 }) {
   const scrollRef = useRef(null)
   const [draft, setDraft] = useState('')
@@ -563,7 +555,6 @@ function ScopeChat({
             onKeyDown={e => { if (e.key === 'Enter') submitFree() }}
           />
           <div className="pp-tools">
-            <Btn size="sm" variant="text" icon="back" onClick={onStepBack} disabled={stepIndex === 0}>Back</Btn>
             <Btn size="sm" variant="filled" onClick={() => {
               if (step?.type === 'multi') onAnswer(multi.length ? multi : ['Skipped'])
               else if (step?.type === 'single') onAnswer(answers[step.key] ?? step.a)
@@ -575,8 +566,8 @@ function ScopeChat({
           </div>
         </div>
         <p className="pp-hint">
-          <Icon name="keyboard" size={13} /> <Kbd>Enter</Kbd> sends · <Kbd>⌘←</Kbd> back a screen · click any
-          answered question or config row to change it
+          <Icon name="keyboard" size={13} /> <Kbd>Enter</Kbd> sends · click any answered question or
+          config row to change it
         </p>
       </div>
     </div>
